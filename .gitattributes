@@ -1,0 +1,11 @@
+prebuilts/clang/host/linux-x86/clang-r487747c/bin/clang-17 filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-r487747c/lib/libclang-cpp.so.17 filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-r487747c/lib/libclang.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-r487747c/lib/liblldb.so.17.0.2 filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-r487747c/lib/libLLVM-17.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-r487747c/musl/lib/libclang.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang/host/linux-x86/clang-stable/lib/libclang.so filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang-tools/darwin-x86/lib64/libclang-cpp.dylib filter=lfs diff=lfs merge=lfs -text
+prebuilts/clang-tools/linux-x86/lib64/libclang-cpp.so.17 filter=lfs diff=lfs merge=lfs -text
+prebuilts/jdk/jdk11/linux-x86/lib/modules filter=lfs diff=lfs merge=lfs -text
+prebuilts/build-tools/common/framework/ktfmt.jar filter=lfs diff=lfs merge=lfs -text

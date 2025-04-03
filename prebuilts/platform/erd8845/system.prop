@@ -1,0 +1,6 @@
+#
+# system.prop for erd9945
+#
+## IMS Packet Inital Start flag
+vendor.pktrouter=1
+
