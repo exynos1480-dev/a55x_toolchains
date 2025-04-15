@@ -18,8 +18,8 @@ VENDOR_EARLY_MODULE_LIST = [
     "drivers/clk/samsung/clk_exynos.ko",
     "drivers/watchdog/s3c2410_wdt.ko",
     "drivers/clocksource/exynos_mct_v3.ko",
-    "drivers/samsung/debug/sec_debug_base_early.ko",
-    "drivers/samsung/debug/sec_debug_mode.ko",
+#    "drivers/samsung/debug/sec_debug_base_early.ko",
+#    "drivers/samsung/debug/sec_debug_mode.ko",
 ]
 
 VENDOR_MODULE_LIST = [
@@ -207,7 +207,7 @@ VENDOR_DLKM_MODULE_LIST = [
     # For vendor_dlkm in order
     "net/wireless/cfg80211.ko",
     "drivers/net/wireless/scsc/scsc_wlan.ko",
-    "drivers/samsung/debug/sec_debug_ssld_info.ko"
+   # "drivers/samsung/debug/sec_debug_ssld_info.ko"
 ]
 
 FACTORY_BUILD_MODULE_LIST = [
