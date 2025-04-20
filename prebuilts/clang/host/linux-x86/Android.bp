@@ -79,9 +79,6 @@ libclang_rt_prebuilt_library_static {
         never: true,
     },
     stl: "none",
-    bazel_module: {
-        label: "//prebuilts/clang/host/linux-x86:libclang_rt",
-    },
 }
 
 libclang_rt_prebuilt_library_static {
@@ -411,6 +408,14 @@ llvm_tools_filegroup {
     visibility: ["//development/scripts:__subpackages__"],
     // The tools and libs in the filegroup are in
     // ./soong/clangprebuilts.go:llvmToolsFiles
+}
+
+llvm_prebuilt_build_tool {
+    name: "llvm-dwarfdump",
+}
+
+llvm_prebuilt_build_tool {
+    name: "llvm-objdump",
 }
 
 subdirs = [

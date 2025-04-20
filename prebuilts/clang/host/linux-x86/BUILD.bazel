@@ -10,11 +10,10 @@
 Toolchain config
 """
 
-load("@bazel_skylib//rules:common_settings.bzl", "bool_flag", "string_flag")
+load("@bazel_skylib//rules:common_settings.bzl", "string_flag")
 load("@env//:env.bzl", "env")
-load("//build/bazel/flags:common.bzl", "is_env_true")
 load(
-    ":cc_toolchain_config.bzl",
+    "//build/bazel/toolchains/clang/host/linux-x86:cc_toolchain_config.bzl",
     "CLANG_TOOLS",
     "android_cc_toolchain",
     "clang_tool_output_group",
@@ -23,7 +22,7 @@ load(
     "toolchain_definition",
 )
 load(
-    ":cc_toolchain_constants.bzl",
+    "//build/bazel/toolchains/clang/host/linux-x86:cc_toolchain_constants.bzl",
     "arch_to_variants",
     "arches",
     "device_compatibility_flags_non_darwin",
@@ -39,45 +38,6 @@ load(
     _bionic_crt = "bionic_crt",
     _musl_crt = "musl_crt",
 )
-load(
-    ":cc_toolchain_features_arm_isa_test.bzl",
-    "cc_toolchain_features_arm_isa_test_suite",
-)
-load(":cc_toolchain_clang_version_test.bzl", "cc_toolchain_clang_version_test_suite")
-load(":cc_toolchain_features_misc_test.bzl", "cc_toolchain_features_test_suite")
-load(
-    ":cc_toolchain_features_cfi_test.bzl",
-    "cc_toolchain_features_cfi_test_suite",
-)
-load(
-    ":cc_toolchain_features_pack_relocation_test.bzl",
-    "cc_toolchain_features_pack_relocation_test_suite",
-)
-load(
-    ":cc_toolchain_features_sanitizer_blocklist_test.bzl",
-    "cc_toolchain_features_sanitizer_blocklist_test_suite",
-)
-load(
-    ":cc_toolchain_features_thinlto_test.bzl",
-    "cc_toolchain_features_lto_test_suite",
-)
-load(
-    ":cc_toolchain_features_ubsan_test.bzl",
-    "cc_toolchain_features_ubsan_test_suite",
-)
-load(
-    ":cc_toolchain_features_env_based_flags_test.bzl",
-    "cc_toolchain_features_env_based_flags_test_suite",
-)
-load(
-    ":cc_toolchain_features_flag_order_test.bzl",
-    "cc_toolchain_features_flag_order_test_suite",
-)
-load(
-    ":cc_toolchain_features_linker_alignment_test.bzl",
-    "cc_toolchain_features_linker_alignment_test_suite",
-)
-load("//build/bazel/flags:common.bzl", "is_env_true")
 load("//build/bazel/platforms/arch/variants:constants.bzl", _arch_constants = "constants")
 
 filegroup(name = "empty")
@@ -103,8 +63,8 @@ clang_version_info(
                              generated_config_constants.X86_64ArchFeatureCflags,
                          ) + generated_config_constants.X86_64Cflags,
         crt = _bionic_crt,
-        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_x86_64"],
-        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_x86_64"],
+        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_x86_64"],
+        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_x86_64"],
         linker_flags = generated_config_constants.X86_64ToolchainLdflags + generated_config_constants.X86_64Lldflags,
         target_arch = arches.X86_64,
         target_os = "android",
@@ -126,8 +86,8 @@ clang_version_info(
                              generated_config_constants.X86ArchFeatureCflags,
                          ) + generated_config_constants.X86Cflags,
         crt = _bionic_crt,
-        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_x86"],
-        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_x86"],
+        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_x86"],
+        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_x86"],
         linker_flags = generated_config_constants.X86ToolchainLdflags + generated_config_constants.X86Lldflags,
         target_arch = arches.X86,
         target_os = "android",
@@ -148,8 +108,8 @@ clang_version_info(
                              [],
                          ),
         crt = _bionic_crt,
-        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_arm64"],
-        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_arm64"],
+        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_arm64"],
+        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_arm64"],
         linker_flags = generated_config_constants.Arm64CpuVariantLdflags.get(
             variant.cpu_variant,
             [],
@@ -174,8 +134,8 @@ clang_version_info(
                              [],
                          ),
         crt = _bionic_crt,
-        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_arm"],
-        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:android_arm"],
+        libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_arm"],
+        libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:android_arm"],
         # do not pass "ld"-only flags as Bazel is only using lld. Ensure that all flags are lld-compatible.
         linker_flags = generated_config_constants.ArmLldflags,
         target_arch = arches.Arm,
@@ -199,8 +159,8 @@ android_cc_toolchain(
     ],
     crt = False,
     gcc_toolchain = generated_config_constants.LinuxGccRoot,
-    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_glibc_x86_64"],
-    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_glibc_x86_64"],
+    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_glibc_x86_64"],
+    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_glibc_x86_64"],
     linker_flags = generated_config_constants.LinuxGlibcLdflags +
                    generated_config_constants.LinuxLdflags +
                    generated_config_constants.LinuxX8664Ldflags +
@@ -226,8 +186,8 @@ android_cc_toolchain(
     ],
     crt = False,
     gcc_toolchain = generated_config_constants.LinuxGccRoot,
-    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_glibc_x86"],
-    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_glibc_x86"],
+    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_glibc_x86"],
+    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_glibc_x86"],
     linker_flags = generated_config_constants.LinuxGlibcLdflags +
                    generated_config_constants.LinuxLdflags +
                    generated_config_constants.LinuxX86Ldflags +
@@ -253,8 +213,8 @@ android_cc_toolchain(
     ],
     crt = _musl_crt,
     gcc_toolchain = generated_config_constants.LinuxGccRoot,
-    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_musl_x86_64"],
-    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_musl_x86_64"],
+    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_musl_x86_64"],
+    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_musl_x86_64"],
     linker_flags = generated_config_constants.LinuxMuslLdflags +
                    generated_config_constants.LinuxLdflags +
                    generated_config_constants.LinuxX8664Ldflags,
@@ -278,8 +238,8 @@ android_cc_toolchain(
     ],
     crt = _musl_crt,
     gcc_toolchain = generated_config_constants.LinuxGccRoot,
-    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_musl_x86"],
-    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel/platforms/os_arch:linux_musl_x86"],
+    libclang_rt_builtin = libclang_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_musl_x86"],
+    libclang_rt_ubsan_minimal = libclang_ubsan_minimal_rt_prebuilt_map["//build/bazel_common_rules/platforms/os_arch:linux_musl_x86"],
     linker_flags = generated_config_constants.LinuxMuslLdflags +
                    generated_config_constants.LinuxLdflags +
                    generated_config_constants.LinuxX86Ldflags,
@@ -312,12 +272,12 @@ toolchain_type(name = "nocrt_toolchain")
     toolchain(
         name = "%s_def" % toolchain_name,
         exec_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_glibc",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_glibc",
         ],
         target_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_glibc",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_glibc",
         ],
         toolchain = toolchain_name,
         toolchain_type = toolchain_type,
@@ -330,12 +290,12 @@ toolchain_type(name = "nocrt_toolchain")
     toolchain(
         name = "%s_def" % toolchain_name,
         exec_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_glibc",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_glibc",
         ],
         target_compatible_with = [
-            "//build/bazel/platforms/arch:x86",
-            "//build/bazel/platforms/os:linux_glibc",
+            "//build/bazel_common_rules/platforms/arch:x86",
+            "//build/bazel_common_rules/platforms/os:linux_glibc",
         ],
         toolchain = toolchain_name,
         toolchain_type = toolchain_type,
@@ -348,12 +308,12 @@ toolchain_type(name = "nocrt_toolchain")
     toolchain(
         name = "%s_def" % toolchain_name,
         exec_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_musl",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_musl",
         ],
         target_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_musl",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_musl",
         ],
         toolchain = toolchain_name,
         toolchain_type = toolchain_type,
@@ -366,12 +326,12 @@ toolchain_type(name = "nocrt_toolchain")
     toolchain(
         name = "%s_def" % toolchain_name,
         exec_compatible_with = [
-            "//build/bazel/platforms/arch:x86_64",
-            "//build/bazel/platforms/os:linux_musl",
+            "//build/bazel_common_rules/platforms/arch:x86_64",
+            "//build/bazel_common_rules/platforms/os:linux_musl",
         ],
         target_compatible_with = [
-            "//build/bazel/platforms/arch:x86",
-            "//build/bazel/platforms/os:linux_musl",
+            "//build/bazel_common_rules/platforms/arch:x86",
+            "//build/bazel_common_rules/platforms/os:linux_musl",
         ],
         toolchain = toolchain_name,
         toolchain_type = toolchain_type,
@@ -430,80 +390,6 @@ filegroup(
     visibility = ["//build/bazel/tests:__subpackages__"],
 )
 
-cc_toolchain_features_arm_isa_test_suite(
-    name = "cc_toolchain_features_arm_isa_test",
-)
-
-cc_toolchain_clang_version_test_suite(
-    name = "cc_toolchain_clang_version_tests",
-)
-
-cc_toolchain_features_test_suite(
-    name = "cc_toolchain_features_tests",
-)
-
-cc_toolchain_features_cfi_test_suite(
-    name = "cc_toolchain_features_cfi_tests",
-)
-
-cc_toolchain_features_pack_relocation_test_suite(
-    name = "cc_toolchain_features_pack_relocation_tests",
-)
-
-cc_toolchain_features_lto_test_suite(
-    name = "cc_toolchain_features_thinlto_tests",
-)
-
-cc_toolchain_features_sanitizer_blocklist_test_suite(
-    name = "cc_toolchain_features_sanitizer_blocklist_tests",
-)
-
-cc_toolchain_features_ubsan_test_suite(
-    name = "cc_toolchain_features_ubsan_tests",
-)
-
-cc_toolchain_features_env_based_flags_test_suite(
-    name = "cc_toolchain_features_env_based_flags_tests",
-)
-
-cc_toolchain_features_flag_order_test_suite(
-    name = "cc_toolchain_features_flag_order_tests",
-)
-
-cc_toolchain_features_linker_alignment_test_suite(
-    name = "cc_toolchain_features_linker_alignment_tests",
-)
-
-bool_flag(
-    name = "auto_zero_initialize_env",
-    build_setting_default = is_env_true(env.get("AUTO_ZERO_INITIALIZE")),
-)
-
-bool_flag(
-    name = "auto_pattern_initialize_env",
-    build_setting_default = is_env_true(env.get("AUTO_PATTERN_INITIALIZE")),
-)
-
-bool_flag(
-    name = "auto_uninitialize_env",
-    build_setting_default = is_env_true(env.get("AUTO_UNINITIALIZE")),
-)
-
-bool_flag(
-    name = "use_ccache_env",
-    build_setting_default = is_env_true(env.get("USE_CCACHE")),
-)
-
-bool_flag(
-    name = "llvm_next_env",
-    build_setting_default = is_env_true(env.get("LLVM_NEXT")),
-)
-
-bool_flag(
-    name = "allow_unknown_warning_option_env",
-    build_setting_default = is_env_true(env.get("ALLOW_UNKNOWN_WARNING_OPTION")),
-)
-
 string_flag(
     name = "clang_version",
     build_setting_default = env.get(
@@ -518,17 +404,4 @@ string_flag(
         "LLVM_RELEASE_VERSION",
         generated_config_constants.CLANG_DEFAULT_SHORT_VERSION,
     ),
-)
-
-string_flag(
-    name = "clang_default_debug_level",
-    build_setting_default = env.get("CLANG_DEFAULT_DEBUG_LEVEL") or "",
-    values = [
-        "debug_level_g",
-        "debug_level_0",
-        "debug_level_1",
-        "debug_level_2",
-        "debug_level_3",
-        "",
-    ],
 )
